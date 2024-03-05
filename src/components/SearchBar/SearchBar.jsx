@@ -1,20 +1,26 @@
-export default function SearchBar() {
-  const handleSubmit = e => {
-    e.preventDefault();
-    e.target.reset();
-  };
+import { Field, Form, Formik } from 'formik';
 
+export default function SearchBar({ onSearch }) {
   return (
     <header>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          autoComplete="off"
-          autoFocus
-          placeholder="Search images and photos"
-        />
-        <button type="submit">Search</button>
-      </form>
+      <Formik
+        initialValues={{ searchQuery: '' }}
+        onSubmit={(values, actions) => {
+          onSearch(values.searchQuery);
+          actions.resetForm();
+        }}
+      >
+        <Form>
+          <Field
+            type="text"
+            name="searchQuery"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+          />
+          <button type="submit">Search</button>
+        </Form>
+      </Formik>
     </header>
   );
 }

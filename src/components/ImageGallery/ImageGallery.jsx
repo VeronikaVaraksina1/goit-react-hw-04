@@ -1,11 +1,13 @@
 import ImageCard from '../ImageCard/ImageCard';
 
-export default function ImageGallery() {
+export default function ImageGallery({ items, query }) {
   return (
     <ul>
-      <li>
-        <ImageCard />
-      </li>
+      {items.map(item => (
+        <li key={item.id}>
+          <ImageCard smallImg={item.urls.small} query={query} />
+        </li>
+      ))}
     </ul>
   );
 }

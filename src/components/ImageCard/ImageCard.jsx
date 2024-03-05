@@ -1,8 +1,7 @@
-export default function ImageCard() {
+export default function ImageCard({ smallImg, query }) {
   return (
     <div>
-      Image
-      <img src="" alt="" />
+      <img src={smallImg} alt={query} />
     </div>
   );
 }
