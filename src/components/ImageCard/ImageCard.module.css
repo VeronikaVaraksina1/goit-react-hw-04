@@ -1,0 +1,26 @@
+.card {
+  width: calc(100% / 3);
+  border: 1px solid #000;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  padding: 8px;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}

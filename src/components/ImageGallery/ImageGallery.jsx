@@ -1,11 +1,12 @@
+import css from './ImageGallery.module.css';
 import ImageCard from '../ImageCard/ImageCard';
 
-export default function ImageGallery({ items, query }) {
+export default function ImageGallery({ images, onOpenModal }) {
   return (
-    <ul>
-      {items.map(item => (
-        <li key={item.id}>
-          <ImageCard smallImg={item.urls.small} query={query} />
+    <ul className={css.container}>
+      {images.map(image => (
+        <li key={image.id}>
+          <ImageCard image={image} onOpenModal={onOpenModal} />
         </li>
       ))}
     </ul>

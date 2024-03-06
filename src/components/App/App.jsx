@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
+
+import { fetchData } from '../../image-api';
 import ImageGallery from '../ImageGallery/ImageGallery';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
 import SearchBar from '../SearchBar/SearchBar';
-import { fetchData } from '../../image-api';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import ImageModal from '../ImageModal/ImageModal';
+
 import toast, { Toaster } from 'react-hot-toast';
+import { MagnifyingGlass } from 'react-loader-spinner';
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -11,6 +16,8 @@ export default function App() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({});
 
   useEffect(() => {
     if (searchQuery === '') {
@@ -24,10 +31,14 @@ export default function App() {
 
         const data = await fetchData(searchQuery, page);
 
+        if (data.total_pages === 0) {
+          toast.error('No results!');
+        }
+
         setImages(previousImages => [...previousImages, ...data.results]);
       } catch (error) {
         setError(true);
-        toast.error("This didn't work.");
+        toast.error('Error! Please reload the page.');
       } finally {
         setLoading(false);
       }
@@ -35,6 +46,9 @@ export default function App() {
 
     getData();
   }, [searchQuery, page]);
+
+  const endOfResults = Math.ceil(images.total_pages / 10); // per_page: 10
+  const numberOfCards = images.length > 0;
 
   const handleSubmit = query => {
     if (query === '') {
@@ -45,16 +59,53 @@ export default function App() {
   };
 
   const handleLoadMore = () => {
+    if (page >= endOfResults) {
+      toast.error('Sorry, but you have reached the end of search results.');
+    }
     setPage(page + 1);
   };
+
+  function openModal(value) {
+    setModalContent(value);
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    setModalIsOpen(false);
+  }
 
   return (
     <>
       <SearchBar query={searchQuery} onSearch={handleSubmit} />
-      {loading && <p>Loading...</p>}
-      {error && <p>Error!</p>}
-      {images.length > 0 && <ImageGallery items={images} query={searchQuery} />}
-      {images.length > 0 && <LoadMoreBtn onLoadMore={handleLoadMore} />}
+
+      {error && (
+        <ErrorMessage>
+          Something went wrong! Please reload the page.
+        </ErrorMessage>
+      )}
+
+      {numberOfCards && (
+        <ImageGallery images={images} onOpenModal={openModal} />
+      )}
+      {numberOfCards && !loading && <LoadMoreBtn onLoadMore={handleLoadMore} />}
+
+      {loading && (
+        <MagnifyingGlass
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="magnifying-glass-loading"
+          wrapperStyle={{}}
+          wrapperClass="magnifying-glass-wrapper"
+          glassColor="#c0efff"
+          color="#000"
+        />
+      )}
+      <ImageModal
+        value={modalContent}
+        modalIsOpen={modalIsOpen}
+        onCloseModal={closeModal}
+      />
       <Toaster position="top-center" reverseOrder={false} />
     </>
   );
