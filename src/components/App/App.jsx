@@ -1,3 +1,5 @@
+import css from './App.module.css';
+
 import { useState, useEffect } from 'react';
 
 import { fetchData } from '../../image-api';
@@ -75,12 +77,12 @@ export default function App() {
   }
 
   return (
-    <>
+    <div className={css.container}>
       <SearchBar query={searchQuery} onSearch={handleSubmit} />
 
       {error && (
         <ErrorMessage>
-          Something went wrong! Please reload the page.
+          🚩 Something went wrong! Please reload the page.
         </ErrorMessage>
       )}
 
@@ -90,16 +92,18 @@ export default function App() {
       {numberOfCards && !loading && <LoadMoreBtn onLoadMore={handleLoadMore} />}
 
       {loading && (
-        <MagnifyingGlass
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="magnifying-glass-loading"
-          wrapperStyle={{}}
-          wrapperClass="magnifying-glass-wrapper"
-          glassColor="#c0efff"
-          color="#000"
-        />
+        <div className={css.loader}>
+          <MagnifyingGlass
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="magnifying-glass-loading"
+            wrapperStyle={{}}
+            wrapperClass="magnifying-glass-wrapper"
+            glassColor="#c0efff"
+            color="#000"
+          />
+        </div>
       )}
       <ImageModal
         value={modalContent}
@@ -107,6 +111,6 @@ export default function App() {
         onCloseModal={closeModal}
       />
       <Toaster position="top-center" reverseOrder={false} />
-    </>
+    </div>
   );
 }

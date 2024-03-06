@@ -1,0 +1,51 @@
+.button {
+  display: block;
+  position: relative;
+
+  width: 80px;
+  height: 80px;
+  padding: 50px;
+  border: transparent;
+  border-radius: 50%;
+  margin: 0 auto;
+
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.icon {
+  position: absolute;
+  top: 13%;
+  left: 7%;
+
+  width: 80px;
+  height: 78px;
+  padding: 10px;
+  border: 1px solid #91caeb;
+  border-radius: 50%;
+
+  background-color: #aef1ff;
+
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.8em;
+  animation: rotate 40s linear infinite;
+  transition: transform 250ms ease-in;
+  transition: background-color 250ms ease-in, border 250ms ease-in;
+}
+
+.icon:hover,
+.icon:focus {
+  border: 1px solid #41c6cb;
+  background-color: #abfaf2;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

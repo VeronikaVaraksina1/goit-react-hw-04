@@ -1,8 +1,11 @@
+import css from './SearchBar.module.css';
+
 import { Field, Form, Formik } from 'formik';
+import { IoSearch } from 'react-icons/io5';
 
 export default function SearchBar({ onSearch }) {
   return (
-    <header>
+    <header className={css.header}>
       <Formik
         initialValues={{ searchQuery: '' }}
         onSubmit={(values, actions) => {
@@ -13,13 +16,16 @@ export default function SearchBar({ onSearch }) {
         <Form>
           <label>
             <Field
+              className={css.input}
               type="text"
               name="searchQuery"
               autoComplete="off"
               autoFocus
               placeholder="Search images and photos"
             />
-            <button type="submit">Search</button>
+            <button className={css.button} type="submit">
+              <IoSearch />
+            </button>
           </label>
         </Form>
       </Formik>

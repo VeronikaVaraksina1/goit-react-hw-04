@@ -14,6 +14,7 @@ export default function ImageCard({
   return (
     <div className={css.card}>
       <img
+        className={css.image}
         onClick={() =>
           onOpenModal({
             imgRegular: urls.regular,
