@@ -2,6 +2,7 @@ import css from './SearchBar.module.css';
 
 import { Field, Form, Formik } from 'formik';
 import { IoSearch } from 'react-icons/io5';
+import toast from 'react-hot-toast';
 
 export default function SearchBar({ onSearch }) {
   return (
@@ -9,6 +10,10 @@ export default function SearchBar({ onSearch }) {
       <Formik
         initialValues={{ searchQuery: '' }}
         onSubmit={(values, actions) => {
+          if (values.searchQuery === '') {
+            return toast.error('You need to enter text to find pictures 🔍');
+          }
+
           onSearch(values.searchQuery);
           actions.resetForm();
         }}

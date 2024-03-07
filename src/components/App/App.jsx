@@ -53,9 +53,11 @@ export default function App() {
   const numberOfCards = images.length > 0;
 
   const handleSubmit = query => {
-    if (query === '') {
-      return toast.error('You need to enter text to find pictures');
+    if (query === searchQuery) {
+      return toast.error('You wrote the same! 📝');
     }
+
+    setPage(1);
     setImages([]);
     setSearchQuery(query);
   };
@@ -63,7 +65,7 @@ export default function App() {
   const handleLoadMore = () => {
     if (page >= endOfResults) {
       return toast.error(
-        'Sorry, but you have reached the end of search results.'
+        'Sorry, but you have reached the end of search results!'
       );
     }
     setPage(page + 1);
@@ -84,7 +86,7 @@ export default function App() {
 
       {error && (
         <ErrorMessage>
-          🚩 Something went wrong! Please reload the page.
+          Something went wrong! Please reload the page 🚩
         </ErrorMessage>
       )}
 
