@@ -10,7 +10,7 @@ export default function ImageModal({
 }) {
   const customStyles = {
     content: {
-      width: '800px',
+      maxWidth: '800px',
       top: '50%',
       left: '50%',
       right: 'auto',

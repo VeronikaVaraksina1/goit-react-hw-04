@@ -26,7 +26,7 @@ export default function App() {
       return;
     }
 
-    async function getData() {
+    const getData = async () => {
       try {
         setLoading(true);
         setError(false);
@@ -34,7 +34,7 @@ export default function App() {
         const data = await fetchData(searchQuery, page);
 
         if (data.total_pages === 0) {
-          toast.error('No results!');
+          return toast.error('No results!');
         }
 
         setImages(previousImages => [...previousImages, ...data.results]);
@@ -44,7 +44,7 @@ export default function App() {
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     getData();
   }, [searchQuery, page]);
@@ -54,7 +54,7 @@ export default function App() {
 
   const handleSubmit = query => {
     if (query === '') {
-      toast.error('You need to enter text to find pictures');
+      return toast.error('You need to enter text to find pictures');
     }
     setImages([]);
     setSearchQuery(query);
@@ -62,19 +62,21 @@ export default function App() {
 
   const handleLoadMore = () => {
     if (page >= endOfResults) {
-      toast.error('Sorry, but you have reached the end of search results.');
+      return toast.error(
+        'Sorry, but you have reached the end of search results.'
+      );
     }
     setPage(page + 1);
   };
 
-  function openModal(value) {
+  const openModal = value => {
     setModalContent(value);
     setModalIsOpen(true);
-  }
+  };
 
-  function closeModal() {
+  const closeModal = () => {
     setModalIsOpen(false);
-  }
+  };
 
   return (
     <div className={css.container}>
