@@ -10,7 +10,7 @@ export default function SearchBar({ onSearch }) {
       <Formik
         initialValues={{ searchQuery: '' }}
         onSubmit={(values, actions) => {
-          if (values.searchQuery === '') {
+          if (values.searchQuery.trim() === '') {
             return toast.error('You need to enter text to find pictures 🔍');
           }
 
